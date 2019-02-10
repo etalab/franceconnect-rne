@@ -1,0 +1,30 @@
+{
+  "scripts": {
+    "build": "node lib/build",
+    "start": "node server"
+  },
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "got": "^9.6.0",
+    "lodash": "^4.17.11",
+    "passport": "^0.4.0",
+    "passport-oauth2": "^1.4.0"
+  },
+  "devDependencies": {
+    "@etalab/cog": "^0.1.0",
+    "csv-parser": "^2.1.0",
+    "fs-extra": "^7.0.1",
+    "get-stream": "^4.1.0",
+    "iconv-lite": "^0.4.24",
+    "xo": "^0.24.0"
+  },
+  "xo": {
+    "semicolon": false,
+    "space": 2
+  },
+  "engines": {
+    "node": ">= 10"
+  }
+}
