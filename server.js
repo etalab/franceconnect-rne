@@ -37,7 +37,7 @@ app.get('/fc/callback', passport.authenticate('franceconnect', {failureRedirect:
 app.get('/logout', (req, res) => {
   const {idToken} = req.user
   req.logout()
-  res.redirect(`${process.env.FC_SERVICE_URL}/api/v1/logout?id_token_hint=${idToken}&state=foobar&post_logout_redirect_uri=${encodeURIComponent('http://localhost:5000')}`)
+  res.redirect(`${process.env.FC_SERVICE_URL}/api/v1/logout?id_token_hint=${idToken}&state=foobar&post_logout_redirect_uri=${encodeURIComponent(process.env.ROOT_URL)}`)
 })
 
 app.get('/', (req, res) => {
