@@ -1,6 +1,7 @@
 require('dotenv').config()
 
-const {groupBy, deburr} = require('lodash')
+const {readFileSync} = require('fs')
+const {groupBy, deburr, template} = require('lodash')
 const express = require('express')
 const passport = require('passport')
 const session = require('express-session')
@@ -9,6 +10,8 @@ const fcStrategy = require('./lib/franceconnect/strategy')
 
 const dateNaissanceIndex = groupBy(elus, 'dateNaissance')
 const app = express()
+
+const homepage = template(readFileSync('pages/index.html', {encoding: 'utf8'}))
 
 function normalize(str) {
   return deburr(str).toUpperCase().replace(/[^A-Z]+/g, ' ')
@@ -41,16 +44,11 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  if (req.user) {
-    const elu = findElu(req.user)
-    if (!elu) {
-      return res.send({message: 'Non trouvé dans le répertoire national des élus'})
-    }
-
-    return res.send(elu)
-  }
-
-  res.redirect('/fc')
+  res.set('Content-Type', 'text/html')
+  res.send(homepage({
+    identite: req.user,
+    elu: req.user ? findElu(req.user) : undefined
+  }))
 })
 
 function findElu({dateNaissance, nomNaissance, prenom, sexe}) {

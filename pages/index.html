@@ -1,0 +1,35 @@
+<html>
+  <head><title>Mes mandats d'élu</title></head>
+  <body>
+    <h1>Mes mandats d'élu</h1>
+    <% if (identite) { %>
+      <p>Vous êtes authentifié avec FranceConnect. <a href="/logout">Me déconnecter</a></p>
+
+      <h2>Mon identité FranceConnect</h2>
+
+      <ul>
+        <li>Nom de naissance : <%= identite.nomNaissance %></li>
+        <% if (identite.nomMarital) { %><li>Nom d'usage : <%= identite.nomMarital %></li><% } %>
+        <li>Prénom : <%= identite.prenom %></li>
+        <li><%= identite.sexe === 'F' ? 'Femme' : 'Homme' %></li>
+        <li>Date de naissance : <%= identite.dateNaissance %></li>
+      </ul>
+
+      <h2>Mes mandats</h2>
+
+      <% if (elu) { %>
+        <ul>
+          <% elu.mandats.forEach(mandat => { %>
+            <li>Je suis <strong>conseiller municipal</strong> de la commune de <strong><%= mandat.nomCommune %></strong> depuis le <%= mandat.dateDebutMandat %>.</li>
+            <% if (mandat.fonction) { %><li>J'ai la fonction de <strong><%= mandat.fonction %></strong> depuis le <%= mandat.dateDebutFonction %>.</li><% } %>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>Je n'ai pas de mandat d'élu.</p>
+      <% } %>
+
+    <% } else { %>
+      <p>Vous n'êtes pas authentifié. <a href="/fc">M'authentifier avec FranceConnect</a></p>
+    <% } %>
+  </body>
+</html>
